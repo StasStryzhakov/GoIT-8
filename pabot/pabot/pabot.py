@@ -1,4 +1,5 @@
 from AdressBook import AdressBook, Record
+from sort import sort_files
 from Message import (AddContactMessage,
                      AddContactBirthdayMessage,
                      ChangeContacPhonetMessage,
@@ -119,7 +120,8 @@ COMMANDS = {'hello': greeting,
             'delete phone': del_phone,
             'delete': del_contact,
             'birthday': add_birth,
-            'days to birthday': days_to_birthday}
+            'days to birthday': days_to_birthday,
+            'sort directory': sort_files}
 
 # стоп функція
 def break_func():
@@ -152,8 +154,6 @@ def get_user_request(user_input: str):
     return get_command(command)()
 
 
-  
-    
 # головна функція
 def main():
     try:
