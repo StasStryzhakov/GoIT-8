@@ -7,7 +7,9 @@ from Message import (AddContactMessage,
                      DeletePhoneMessage,
                      GreetingMessage,
                      HelpMessage,
-                     StopMessage)
+                     StopMessage,
+                     ValueErrorMessage,
+                     BirthdaysAfterDaysMessage)
 
 # книга контактів
 CONTACTS = AdressBook()
@@ -106,6 +108,20 @@ def days_to_birthday(data: str):
     name = record.name.value
     return  DaysToBirthdayMessage.get_message(name, record.day_to_bithday())
 
+def birthdays_after_days(data):
+    try:
+        result = []
+        days = int(data)
+        for name, record in CONTACTS.items():
+            if record.day_to_bithday() <= days:
+                result.append(f'{name} - {record.birthday.value}')
+        return BirthdaysAfterDaysMessage(result)
+    except ValueError:
+        return ValueErrorMessage
+
+
+
+
 # список команд боту
 COMMANDS = {'hello': greeting,
             'help': get_help,
@@ -119,7 +135,8 @@ COMMANDS = {'hello': greeting,
             'delete phone': del_phone,
             'delete': del_contact,
             'birthday': add_birth,
-            'days to birthday': days_to_birthday}
+            'days to birthday': days_to_birthday,
+            'birthdays after days': birthdays_after_days}
 
 # стоп функція
 def break_func():

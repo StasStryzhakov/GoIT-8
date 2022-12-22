@@ -76,6 +76,19 @@ class DaysToBirthdayMessage(Message):
     
     @staticmethod
     def get_message(name, days):
-        return f'{days} left for the contact birthday {name}'       
+        return f'{days} left for the contact birthday {name}'
 
 
+class BirthdaysAfterDaysMessage(Message):
+
+    @staticmethod
+    def get_message(result: list):
+        if not result:
+            print('No birthdays for this days')
+        return print(*result, sep='\n')
+
+class ValueErrorMessage(Message):
+
+    @staticmethod
+    def get_message():
+        return print('The number of days must be a numeric value')
