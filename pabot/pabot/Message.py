@@ -26,7 +26,17 @@ class HelpMessage(Message):
 >>> delete - remove contact Example: delete "name (only letters without spaces)" 
 >>> good bye/close/exit - bye bye
 >>> birthday - add birthday date to the contact Example: bithday name date(yyyy-mm-dd)
->>> days to birthday - show how much days left to the contact birthday Example: days to birthday name\n'''
+>>> days to birthday - show how much days left to the contact birthday Example: days to birthday name
+>>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects\n
+>>> create note - creates a new note Example: create note "name (only letters without spaces)"
+>>> remove note - deletes a note by name Example: remove note "name"
+>>> describe note - adds description to a note Example: describe note "name" "description"
+>>> delete description - deletes the description of a note 
+>>> alter description - changes the description of a note, if it exists
+>>> tag - add a tag to the note Example: tag "name" "tag"
+>>> untag - deletes a tag from a note, if it exists Example: untag "name" "tag"
+>>> search notes - searches all notes for a match, prints out all matching notes
+>>> notes - shows all recorded notes\n'''
 
 class GreetingMessage(Message):
         
