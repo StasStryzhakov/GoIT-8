@@ -8,7 +8,8 @@ from Message import (AddContactMessage,
                      DeletePhoneMessage,
                      GreetingMessage,
                      HelpMessage,
-                     StopMessage)
+                     StopMessage,
+                     AddContactEmaiMessage)
 
 # книга контактів
 CONTACTS = AdressBook()
@@ -92,6 +93,23 @@ def del_contact(data):
     CONTACTS.remove_record(name)
     return DeleteContactMessage.get_message(name)
 
+# додати email
+def add_email(data, flag=True):
+    
+    name, email = data.strip().split(' ')
+    record = CONTACTS[name]
+    
+    if record.email and flag:
+        raise ValueError('This contact already have email.')
+    
+    record.add_contact_email(email)
+    
+    return AddContactEmaiMessage.get_message(name, email)
+
+def change_email(data):
+    return add_email(data, False)
+    
+    
 # додати дату народження
 def add_birth(data):
     
@@ -107,11 +125,12 @@ def days_to_birthday(data: str):
     name = record.name.value
     return  DaysToBirthdayMessage.get_message(name, record.day_to_bithday())
 
+
 # список команд боту
 COMMANDS = {'hello': greeting,
             'help': get_help,
             'add': add_contact,
-            'change': change_contact,
+            'change phone': change_contact,
             'phone': show_contact_phone,
             'show all': show_all_contacts,
             'good bye': stop_bot,
@@ -120,8 +139,10 @@ COMMANDS = {'hello': greeting,
             'delete phone': del_phone,
             'delete': del_contact,
             'birthday': add_birth,
-            'days to birthday': days_to_birthday,
-            'sort directory': sort_files}
+            'sort directory': sort_files
+            'email': add_email,
+            'change email': change_email,
+            'days to birthday': days_to_birthday}
 
 # стоп функція
 def break_func():

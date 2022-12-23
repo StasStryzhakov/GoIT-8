@@ -73,6 +73,12 @@ class AddContactBirthdayMessage(Message):
     def get_message(name, birthday):
         return f'For {name} you add Birthday {birthday}' 
     
+class AddContactEmaiMessage(Message):
+    
+    @staticmethod
+    def get_message(name, email):
+        return f'For {name} you add email {email}'    
+    
 class DaysToBirthdayMessage(Message):
     
     @staticmethod
