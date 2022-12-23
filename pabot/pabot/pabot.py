@@ -139,7 +139,7 @@ COMMANDS = {'hello': greeting,
             'delete phone': del_phone,
             'delete': del_contact,
             'birthday': add_birth,
-            'sort directory': sort_files
+            'sort directory': sort_files,
             'email': add_email,
             'change email': change_email,
             'days to birthday': days_to_birthday}
