@@ -27,7 +27,7 @@ class HelpMessage(Message):
 >>> good bye/close/exit - bye bye
 >>> birthday - add birthday date to the contact Example: bithday name date(yyyy-mm-dd)
 >>> days to birthday - show how much days left to the contact birthday Example: days to birthday name
->>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects\n
+>>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects
 >>> create note - creates a new note Example: create note "name (only letters without spaces)"
 >>> remove note - deletes a note by name Example: remove note "name"
 >>> describe note - adds description to a note Example: describe note "name" "description"

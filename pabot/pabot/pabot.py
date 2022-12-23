@@ -122,6 +122,8 @@ def del_note_description(data: str):
     name = data.pop(0).lower()
     if name in [i.lower() for i in NOTES.data.keys()]:
         return NOTES.data[name.capitalize()].del_description()
+    else:
+        raise KeyError
 
 
 def change_note_description(data: str):
@@ -129,6 +131,8 @@ def change_note_description(data: str):
     name = data.pop(0).lower()
     if name in [i.lower() for i in NOTES.data.keys()]:
         return NOTES.data[name.capitalize()].change_description(' '.join(data))
+    else:
+        return NOTES.data[name.capitalize()].change_description(None)
 
 
 def add_note_tag(data: str):
@@ -136,6 +140,8 @@ def add_note_tag(data: str):
     name = data.pop(0).lower()
     if name in [i.lower() for i in NOTES.data.keys()]:
         return NOTES.data[name.capitalize()].add_tag(' '.join(data))
+    else:
+        return NOTES.data[name.capitalize()].add_tag(None)
 
 
 def del_note_tag(data: str):
@@ -143,6 +149,8 @@ def del_note_tag(data: str):
     name = data.pop(0).lower()
     if name in [i.lower() for i in NOTES.data.keys()]:
         return NOTES.data[name.capitalize()].del_tag(' '.join(data))
+    else:
+        return NOTES.data[name.capitalize()].del_tag(None)
 
 
 # список команд боту
@@ -162,7 +170,7 @@ COMMANDS = {'hello': greeting,
             'create note': NOTES.add_note,
             'remove note': NOTES.delete_note,
             'describe note': add_note_description,
-            'delete description': del_note_description,
+            'remove description': del_note_description,
             'alter description': change_note_description,
             'tag': add_note_tag,
             'untag': del_note_tag,

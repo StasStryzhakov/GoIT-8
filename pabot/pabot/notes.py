@@ -12,7 +12,7 @@ class Notes(UserDict):
 
     def add_note(self, name):
         name = name.strip().capitalize()
-        if " " in name:
+        if " " in name or not name:
             return "The name of the note can not have whitespace characters.\n"
         if name not in self.data.keys():
             self.data[name] = Note(name)
@@ -87,12 +87,14 @@ class Note:
     """
     Description
     """
-    def __init__(self, name, description=None, tag=None):
+    def __init__(self, name, description='', tag=None):
         self.name = Name(name.strip().capitalize())
         self.description = Description(description)
         self.tags = [Tag(tag)] if tag else []
 
     def add_description(self, description):
+        if not description:
+            return "A valid description must contain something.\n"
         if not self.description.value:
             self.description = Description(description)
             return "Description added.\n"
@@ -101,10 +103,13 @@ class Note:
 
     def del_description(self):
         if self.description.value:
-            self.description = Description(None)
+            self.description = Description('')
             return "Deleted the description.\n"
+        return "No description recorded.\n"
 
     def change_description(self, new_description):
+        if not new_description:
+            return "A valid description must contain something.\n"
         if self.description.value:
             self.description = Description(new_description)
             return "Description changed.\n"
@@ -146,7 +151,7 @@ class Name(Field):
 class Description(Field):
     def __init__(self, value):
         super().__init__(value)
-        self.__value = None
+        self.__value = ''
         self.value = value
 
     @property
