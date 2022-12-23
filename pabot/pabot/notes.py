@@ -11,12 +11,16 @@ class Notes(UserDict):
         self.load_from_file()
 
     def add_note(self, name):
-        name = name.strip().lower().capitalize()
-        self.data[name] = Note(name)
-        return "Created a new note.\n"
+        name = name.strip().capitalize()
+        if " " in name:
+            return "The name of the note can not have whitespace characters.\n"
+        if name not in self.data.keys():
+            self.data[name] = Note(name)
+            return "Created a new note.\n"
+        return "This note already exists.\n"
 
     def delete_note(self, name):
-        name = name.strip().lower().capitalize()
+        name = name.strip().capitalize()
         del self.data[name]
         return "Note has been deleted.\n"
 
@@ -52,7 +56,7 @@ class Notes(UserDict):
     def finder(self, data: str):  # Пошук за символами
         phrase = data.strip().lower()
         if not phrase:
-            return "Insufficient data to look for."
+            return "Insufficient data to look for.\n"
         output = {}
         for note, info in self.data.items():
             if note in output.keys():
@@ -65,8 +69,8 @@ class Notes(UserDict):
                 output[note] = info
 
         if not output:
-            return "No matches found."
-        output_str = ""
+            return "No matches found.\n"
+        output_str = "\nSearch results:\n"
         for key, val in output.items():
             output_str += f"\n{key}\nDescription: {val.description.value}\nTags: {[i.value for i in val.tags]}\n"
         return output_str
