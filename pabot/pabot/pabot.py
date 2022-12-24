@@ -199,6 +199,8 @@ COMMANDS = {'hello': greeting,
             'untag': del_note_tag,
             'search notes': NOTES.finder,
             'notes': NOTES.show_notes,
+            'email': add_email,
+            'change email': change_email,
             'sort directory': sort_files}
 
 
