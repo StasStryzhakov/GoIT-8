@@ -108,6 +108,7 @@ def days_to_birthday(data: str):
     name = record.name.value
     return  DaysToBirthdayMessage.get_message(name, record.day_to_bithday())
 
+# виводить дні народження за задану кількість днів
 def birthdays_after_days(data):
     try:
         result = []
