@@ -1,4 +1,5 @@
 from AdressBook import AdressBook, Record
+import pickle
 from sort import sort_files
 from Message import (AddContactMessage,
                      AddContactBirthdayMessage,
@@ -125,6 +126,22 @@ def days_to_birthday(data: str):
     name = record.name.value
     return  DaysToBirthdayMessage.get_message(name, record.day_to_bithday())
 
+def read_from_file(data: str):
+    filename = fr'{data}'
+
+    try:
+        file = open(filename, 'rb')
+        global CONTACTS
+        CONTACTS = pickle.load(file)
+        return CONTACTS
+    except FileNotFoundError:
+        return print('File not found')
+
+def save_to_file(data: str):
+    filename = fr'{data}'
+
+    with open(filename, "wb") as file:
+            pickle.dump(CONTACTS, file)
 
 # список команд боту
 COMMANDS = {'hello': greeting,
@@ -142,7 +159,9 @@ COMMANDS = {'hello': greeting,
             'sort directory': sort_files,
             'email': add_email,
             'change email': change_email,
-            'days to birthday': days_to_birthday}
+            'days to birthday': days_to_birthday,
+            'Open from file': read_from_file,
+            'Save to file': save_to_file}
 
 # стоп функція
 def break_func():
