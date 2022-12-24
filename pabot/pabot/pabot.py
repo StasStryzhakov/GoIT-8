@@ -169,11 +169,66 @@ def get_user_request(user_input: str):
             command = key
             data = user_input[len(key):]
             break
-        
+    if not command:
+        command = gess_what(user_input)
+        data = user_input[len(command):]  
     if data:
         return get_command(command)(data)
     return get_command(command)()
 
+# функція намагається підібрати бажану опцію при не коректному введені
+def gess_what(user_input):
+   
+    dict_1 = {
+            'hello': 0,
+            'help': 0,
+            'phone': 0, # + name
+            'show all': 0,
+            'good bye': 0,
+            'close': 0,
+            'exit': 0,
+            'delete': 0, # + name
+            'days to birthday': 0, # + name
+            'sort directory': 0,
+            'email': 0, # + name email
+            'change email': 0 # + name email
+            } 
+
+    dict_2 = {  
+            'add': 0, # + name number
+            'change': 0, # + name number
+            'delete phone': 0, # + name number
+            'birthday': 0, # + name date
+            } 
+
+    text = user_input.strip().lower()
+    text_words = text.split(" ")
+   
+    dict_result = dict_1
+    for item in text_words:
+        if item.isdigit():
+            text_words = text_words[:-2]
+            dict_result = dict_2
+            break
+   
+    for command in dict_result.keys():
+        command_words = command.split(" ")
+        data_compare = list(zip(text_words, command_words))
+        for item in data_compare:
+            for char in item[0]:
+                if char in item[1]:
+                    dict_result[command] += 1
+            if len(item[0]) == len(item[1]):
+                dict_result[command] += 1           
+
+    for key, value in dict_result.items():
+        if value == max(dict_result.values()):
+            result = key
+    
+    answer = input(f'Did you mean "{result}" command to execute?(Y/N):')
+
+    if answer == "Y":
+        return result
 
 # головна функція
 def main():
