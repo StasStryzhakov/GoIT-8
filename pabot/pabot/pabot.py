@@ -1,6 +1,6 @@
 from AdressBook import AdressBook, Record
 from sort import sort_files
-from notes import Notes, Note
+from notes import Notes
 from Message import (AddContactMessage,
                      AddContactBirthdayMessage,
                      ChangeContacPhonetMessage,
@@ -11,7 +11,7 @@ from Message import (AddContactMessage,
                      HelpMessage,
                      StopMessage)
 
-# книга контактів
+# книга контактів і нотатки
 CONTACTS = AdressBook()
 NOTES = Notes()
 
@@ -110,6 +110,7 @@ def days_to_birthday(data: str):
     return  DaysToBirthdayMessage.get_message(name, record.day_to_bithday())
 
 
+# Додати описання нотатку
 def add_note_description(data: str):
     data = data.strip().split(' ')
     name = data.pop(0).lower()
@@ -117,6 +118,7 @@ def add_note_description(data: str):
         return NOTES.data[name.capitalize()].add_description(' '.join(data))
 
 
+# Видалити описання нотатку
 def del_note_description(data: str):
     data = data.strip().split(' ')
     name = data.pop(0).lower()
@@ -126,6 +128,7 @@ def del_note_description(data: str):
         raise KeyError
 
 
+# Замінити описання нотатку на інше
 def change_note_description(data: str):
     data = data.strip().split(' ')
     name = data.pop(0).lower()
@@ -135,6 +138,7 @@ def change_note_description(data: str):
         return NOTES.data[name.capitalize()].change_description(None)
 
 
+# Додати тег до нотатку
 def add_note_tag(data: str):
     data = data.strip().split(' ')
     name = data.pop(0).lower()
@@ -144,6 +148,7 @@ def add_note_tag(data: str):
         return NOTES.data[name.capitalize()].add_tag(None)
 
 
+# Видалити тег нотатка за назвою
 def del_note_tag(data: str):
     data = data.strip().split(' ')
     name = data.pop(0).lower()
