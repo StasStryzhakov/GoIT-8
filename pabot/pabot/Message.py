@@ -37,6 +37,8 @@ class HelpMessage(Message):
 >>> untag - deletes a tag from a note, if it exists Example: untag "name" "tag"
 >>> search notes - searches all notes for a match, prints out all matching notes
 >>> notes - shows all recorded notes\n'''
+>>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects\n'''
+
 
 class GreetingMessage(Message):
         
@@ -81,6 +83,12 @@ class AddContactBirthdayMessage(Message):
     @staticmethod
     def get_message(name, birthday):
         return f'For {name} you add Birthday {birthday}' 
+    
+class AddContactEmaiMessage(Message):
+    
+    @staticmethod
+    def get_message(name, email):
+        return f'For {name} you add email {email}'    
     
 class DaysToBirthdayMessage(Message):
     

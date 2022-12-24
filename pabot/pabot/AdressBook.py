@@ -1,6 +1,7 @@
 from collections import UserDict
 from datetime import datetime
 import pickle
+import re
 
 # клас батько, для роботи з данними 
 class Field:
@@ -43,7 +44,18 @@ class Phone(Field):
         elif len(phone) == 12:
             return f'+{phone}'
         else:
-            raise ValueError('Wrong phones')    
+            raise ValueError('Wrong phones')
+        
+# клас нащадок, зберігає email контакту, провіряє на валідність і форматує          
+class Email(Field):
+    
+    @Field.value.setter
+    def value(self, email: str):
+        result = re.search(r"[a-zA-z][\w_.]+@[a-zA-z]+\.[a-zA-z]{2,}", email)
+        if not result:
+            raise ValueError('Wrong email')
+        self._value = result.group()
+        
     
 # клас нащадок,  зберігає дату народження контакту, та перевіряє на валідність
 class Birthday(Field):
@@ -63,16 +75,21 @@ class Record:
         self.name = Name(name)
         self.phones = []
         self.birthday = None
+        self.email = None
         
 # вивід усієї доступної інформації про контакт        
     def get_info(self):
         birthday_info = ''
         phones_info = [phone.value for phone in self.phones]
+        email_info = ''
         
         if self.birthday:
             birthday_info = f' Birthday: {self.birthday.value}'
             
-        return f'{self.name.value} : {", ".join(phones_info)}{birthday_info}'
+        if self.email:
+            email_info = f' Email: {self.email.value}'
+            
+        return f'{self.name.value} : {", ".join(phones_info)}{birthday_info}{email_info}'
     
 # розрахунок кількості днів до дня народження контакту            
     def day_to_bithday(self):
@@ -97,6 +114,10 @@ class Record:
     def add_birthday(self, date: str):
         self.birthday = Birthday(date)
         
+# додати email
+    def add_contact_email(self, email: str):
+        self.email = Email(email)
+            
 # видалити телефон  
     def delete_phone(self, phone: str):
         for record_phone in self.phones:

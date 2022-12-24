@@ -9,7 +9,8 @@ from Message import (AddContactMessage,
                      DeletePhoneMessage,
                      GreetingMessage,
                      HelpMessage,
-                     StopMessage)
+                     StopMessage,
+                     AddContactEmaiMessage)
 
 # книга контактів і нотатки
 CONTACTS = AdressBook()
@@ -94,6 +95,23 @@ def del_contact(data):
     CONTACTS.remove_record(name)
     return DeleteContactMessage.get_message(name)
 
+# додати email
+def add_email(data, flag=True):
+    
+    name, email = data.strip().split(' ')
+    record = CONTACTS[name]
+    
+    if record.email and flag:
+        raise ValueError('This contact already have email.')
+    
+    record.add_contact_email(email)
+    
+    return AddContactEmaiMessage.get_message(name, email)
+
+def change_email(data):
+    return add_email(data, False)
+    
+    
 # додати дату народження
 def add_birth(data):
 
@@ -162,7 +180,7 @@ def del_note_tag(data: str):
 COMMANDS = {'hello': greeting,
             'help': get_help,
             'add': add_contact,
-            'change': change_contact,
+            'change phone': change_contact,
             'phone': show_contact_phone,
             'show all': show_all_contacts,
             'good bye': stop_bot,
@@ -182,6 +200,7 @@ COMMANDS = {'hello': greeting,
             'search notes': NOTES.finder,
             'notes': NOTES.show_notes,
             'sort directory': sort_files}
+
 
 # стоп функція
 def break_func():
@@ -212,8 +231,6 @@ def get_user_request(user_input: str):
     if data:
         return get_command(command)(data)
     return get_command(command)()
-
-
 
 
 
