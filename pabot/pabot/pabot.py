@@ -201,6 +201,7 @@ COMMANDS = {'hello': greeting,
             'show notes': NOTES.show_notes,
             'email': add_email,
             'change email': change_email,
+            'sort by tag': NOTES.notes_sort,
             'sort directory': sort_files}
 
 
