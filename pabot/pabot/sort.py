@@ -1,7 +1,7 @@
 import os
 import re
 import shutil
-import sys
+
 
 # Створюємо словник для транслітерації
 trans_dict = {1072: 'a', 1040: 'A', 1073: 'b', 1041: 'B', 1074: 'v', 1042: 'V', 1075: 'g', 1043: 'G', 1076: 'd',
