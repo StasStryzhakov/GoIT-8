@@ -10,6 +10,8 @@ from pabot.Message import (AddContactMessage,
                      GreetingMessage,
                      HelpMessage,
                      StopMessage,
+                     ValueErrorMessage,
+                     BirthdaysAfterDaysMessage,
                      AddContactEmaiMessage)
 
 # книга контактів і нотатки
@@ -127,6 +129,18 @@ def days_to_birthday(data: str):
     name = record.name.value
     return  DaysToBirthdayMessage.get_message(name, record.day_to_bithday())
 
+# виводить дні народження за задану кількість днів
+def birthdays_after_days(data):
+    try:
+        result = []
+        days = int(data)
+        for name, record in CONTACTS.items():
+            if record.birthday and record.day_to_bithday() <= days:
+                result.append(f'{name} - {record.birthday.value}')
+        return BirthdaysAfterDaysMessage(result)
+    except ValueError:
+        return ValueErrorMessage
+        
 
 # Додати описання нотатку
 def add_note_description(data: str):
@@ -190,6 +204,7 @@ COMMANDS = {'hello': greeting,
             'delete contact': del_contact,
             'birthday': add_birth,
             'days to birthday': days_to_birthday,
+            'birthdays after days': birthdays_after_days,
             'create note': NOTES.add_note,
             'remove note': NOTES.delete_note,
             'describe note': add_note_description,
