@@ -114,7 +114,7 @@ def birthdays_after_days(data):
         result = []
         days = int(data)
         for name, record in CONTACTS.items():
-            if record.day_to_bithday() <= days:
+            if record.birthday and record.day_to_bithday() <= days:
                 result.append(f'{name} - {record.birthday.value}')
         return BirthdaysAfterDaysMessage(result)
     except ValueError:
