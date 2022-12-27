@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b43f680c-e8df-4024-b6ab-73625cf06a1a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pabot/pabot/Message.py" beforeDir="false" afterPath="$PROJECT_DIR$/pabot/pabot/Message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pabot/pabot/AdressBook.bin" beforeDir="false" afterPath="$PROJECT_DIR$/pabot/pabot/AdressBook.bin" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
