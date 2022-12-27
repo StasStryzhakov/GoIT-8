@@ -19,13 +19,13 @@ class HelpMessage(Message):
 >>> hello
 >>> help - show commands list
 >>> add - add new contact in storage Example: add "name (only letters without spaces)" "phone number (only digits without spaces)"
->>> change - change existing contact Example: chnage "exist contact name (only letters without spaces)" "new phone number (only digits without spaces)"
->>> phone - show exist contact name and phone
+>>> change - change existing contact Example: change "exist contact name (only letters without spaces)" "new phone number (only digits without spaces)"
+>>> phone - shows all users with given phone for search. Example: phone +380951234567
 >>> show all - show all existing contacts
 >>> delete phone - remove entered phone from contact Example: delete phone "name (only letters without spaces)" "phone number (only digits without spaces)"
 >>> delete - remove contact Example: delete "name (only letters without spaces)" 
 >>> good bye/close/exit - bye bye
->>> birthday - add birthday date to the contact Example: bithday name date(yyyy-mm-dd)
+>>> birthday - add birthday date to the contact Example: birthday name date(yyyy-mm-dd)
 >>> days to birthday - show how much days left to the contact birthday Example: days to birthday name
 >>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects
 >>> create note - creates a new note Example: create note "name (only letters without spaces)"
