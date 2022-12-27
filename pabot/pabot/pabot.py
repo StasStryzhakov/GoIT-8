@@ -1,7 +1,7 @@
-from pabot.AdressBook import AdressBook, Record
-from pabot.sort import sort_files
-from pabot.notes import Notes
-from pabot.Message import (AddContactMessage,
+from AdressBook import AdressBook, Record
+from sort import sort_files
+from notes import Notes
+from Message import (AddContactMessage,
                      AddContactBirthdayMessage,
                      ChangeContacPhonetMessage,
                      DaysToBirthdayMessage,
@@ -11,13 +11,14 @@ from pabot.Message import (AddContactMessage,
                      HelpMessage,
                      StopMessage,
                      AddContactEmaiMessage)
+import re
 
 # книга контактів і нотатки
 CONTACTS = AdressBook()
 NOTES = Notes()
 
 # вивід інструкції
-def get_help():
+def get_help(*data):
     return HelpMessage.get_message()
 
 # обробляє помилки
@@ -38,11 +39,11 @@ def input_error(func):
     return inner
 
 # привітальне повідомлення
-def greeting():
+def greeting(*data):
     return GreetingMessage.get_message()
 
 # прощальне повідомлення
-def stop_bot():
+def stop_bot(*data):
     return StopMessage.get_message()
 
 # додати контакт, спочатку формуєся сам контакт, а потім додається у книгу
@@ -76,7 +77,7 @@ def show_contact_phone(data: str):
     return CONTACTS.search(data.strip()).get_info()
 
 # вивід інформації по всім контактам
-def show_all_contacts():
+def show_all_contacts(*data):
 
     result = [record.get_info() for page in CONTACTS.iterator() for record in page]
     return '\n'.join(result)
@@ -205,7 +206,7 @@ COMMANDS = {'hello': greeting,
 
 
 # стоп функція
-def break_func():
+def break_func(*data):
     return 'Wrong enter'
 
 # обробка данних введених користувачем
@@ -229,11 +230,124 @@ def get_user_request(user_input: str):
             command = key
             data = user_input[len(key):]
             break
+    
+    if not command:
+        command = gess_what(user_input)
+        data = user_input[len(command):]    
+   
+    return get_command(command)(data)
 
-    if data:
-        return get_command(command)(data)
-    return get_command(command)()
 
+def gess_what(user_input):
+    """"
+    Функція намагається підібрати бажану опцію при не коректному введені команди.
+    Словник dict_result - своєрідна турнірна таблиця, де ключі - можливі команди боту, а значення словника - бали.
+    Бот запропонує користувачу команду, що набере найбільше балів в ході аналізу.
+    """
+    dict_result = {
+            'hello': 0,
+            'help': 0,
+            'phone': 0, 
+            'show all': 0,
+            'good bye': 0,
+            'close': 0,
+            'exit': 0,
+            'delete contact': 0, 
+            'days to birthday': 0, 
+            'create note': 0,
+            'remove note': 0,
+            'describe note': 0,
+            'remove description': 0,
+            'alter description': 0,
+            'tag': 0,
+            'untag': 0,
+            'search notes': 0,
+            'show notes': 0,
+            'sort directory': 0,
+            'email': 0, 
+            'change email': 0, 
+            'add': 0, 
+            'change phone': 0, 
+            'delete phone': 0, 
+            'birthday': 0, 
+            } 
+
+    # для конвертації символів
+    conv = {
+            'й': 'q',
+            'ц': 'w',
+            'у': 'e',
+            'к': 'r',
+            'е': 't',
+            'н': 'y',
+            'г': 'u',
+            'ш': 'i',
+            'щ': 'o',
+            'з': 'p',
+            'ф': 'a',
+            'ы': 's',
+            'і': 's',
+            'в': 'd',
+            'а': 'f',
+            'п': 'g',
+            'р': 'h',
+            'о': 'j',
+            'л': 'k',
+            'д': 'l',
+            'я': 'z',
+            'ч': 'x',
+            'с': 'c',
+            'м': 'v',
+            'и': 'b',
+            'т': 'n',
+            'ь': 'm'
+            }
+
+    text = user_input.strip().lower()
+    # переведення введеного тексту на латиницю
+    if bool(re.search(r"[а-я]*", text)):
+        for letter in text:
+            text = text.replace(letter,conv.get(letter, letter))
+   
+    text_words = text.split(" ") # список слів введених користувачем
+
+    # порівняння списків слів у введеному тексті користувачем та слів існуючої команди та присвоєння балів 
+    result = []
+    n = 0
+    # якщо результат порівняння за першим словом неоднозначний, порівнюватиметься друге слово
+    while len(result) != 1 and n < 2:
+        
+        for command in dict_result.keys():
+            command_words = command.split(" ") 
+            data_compare = list(zip(text_words, command_words)) 
+            try:
+                item = data_compare[n]
+            except:
+                continue
+            # порівняння слів за довжиною
+            if len(item[0]) < len(item[1]): 
+                diff = len(item[0]) - len(item[1])
+            else:
+                diff = len(item[1]) - len(item[0])
+            dict_result[command] += diff  
+            # порівняння слів за складом букв
+            word = item[1] 
+            for char in item[0]: 
+                if char in word:
+                    word = word.replace(char, "") # для врахування букв, що повторюються
+                    dict_result[command] += 2     
+
+        # визначення найбільш вірогідної команди
+        result = []
+        for key, value in dict_result.items(): 
+            if value == max(dict_result.values()):
+                result.append(key)
+        n += 1
+
+    answer = input(f'Did you mean "{result[0]}" command to execute?(Y/N):')
+
+    if answer == "Y" or answer == "y":
+        return result[0]
 
 
 # головна функція
