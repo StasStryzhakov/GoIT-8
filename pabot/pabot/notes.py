@@ -53,6 +53,39 @@ class Notes(UserDict):
         if output:
             yield output
 
+    def notes_sort(self, data: str):  # Пошук та сортування за введеними символами
+        phrase = data.strip().lower()
+
+        def sort_help(tag):
+            tag_output = []
+            for i in tag[1]:
+                if i.value == phrase:
+                    tag_output.append('a')
+                else:
+                    tag_output.append(i.value[0])
+            if tag_output:
+                return sorted(tag_output)[0]
+            return "y"
+        if not phrase:
+            return "Insufficient data to look for.\n"
+
+        match = {}
+        non_match = {}
+        for note, info in self.data.items():
+            if find_assist(phrase, [i.value for i in info.tags]):
+                match[note] = info.tags
+            else:
+                non_match[note] = info.tags
+        match = sorted(match.items(), key=sort_help)
+        non_match = sorted(non_match.items(), key=lambda item: sorted(i.value for i in item[1]))
+        output_str = "\nMatched results:\n"
+        for elem in match:
+            output_str += f"\n{elem[0]}\nTags: {[i.value for i in elem[1]]}\n"
+        output_str += "\nUnmatched results:\n"
+        for elem in non_match:
+            output_str += f"\n{elem[0]}\nTags: {[i.value for i in elem[1]]}\n"
+        return output_str
+
     def finder(self, data: str):  # Пошук за символами
         phrase = data.strip().lower()
         if not phrase:
