@@ -20,7 +20,7 @@ class HelpMessage(Message):
 >>> help - show commands list
 >>> add - add new contact in storage Example: add "name (only letters without spaces)" "phone number (only digits without spaces)"
 >>> change - change existing contact Example: change "exist contact name (only letters without spaces)" "new phone number (only digits without spaces)"
->>> phone - show exist contact name and phone
+>>> phone - shows all users with given phone for search. Example: phone +380951234567
 >>> show all - show all existing contacts
 >>> delete phone - remove entered phone from contact Example: delete phone "name (only letters without spaces)" "phone number (only digits without spaces)"
 >>> delete - remove contact Example: delete "name (only letters without spaces)" 
