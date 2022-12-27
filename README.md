@@ -19,7 +19,11 @@
 
 # Використання
 
-Програма запускається командою: pabot
+## Запуск
+
+**_Програма запускається командою: `pabot`_**
+
+## Команди
 
 Після запуску вам будуть доступні команди:
 
@@ -27,32 +31,47 @@
  
 > `help` - show commands list
 
+### Робота з контактами
+
+#### Ім`я та телефон
+
 > `add` - add new contact in storage 
 >>Example: `add` "name (only letters without spaces)" "phone number (only digits without spaces)"
 
 > `change` - change existing contact 
->>Example: `chnage` "exist contact name (only letters without spaces)" "new phone number (only digits without spaces)"
+>>Example: `change` "exist contact name (only letters without spaces)" "new phone number (only digits without spaces)"
 
-> `phone` - show exist contact name and phone
-
-> `show all` - show all existing contacts
-
-> `delete phone` - remove entered phone from contact 
->>Example: `delete phone` "name (only letters without spaces)" "phone number (only digits without spaces)"
-
-> `delete` - remove contact
->>Example: `delete` "name (only letters without spaces)" 
-
->`good bye`/`close`/`exit` - bye bye
+#### Дата народження
 
 > `birthday` - add birthday date to the contact 
->>Example: `bithday` "name" "date"(yyyy-mm-dd) ~~(dd-mm-yyyy)~~ ~~(mm-dd-yyyy)~~
+>>Example: `birthday` "name" "date"(yyyy-mm-dd) ~~(dd-mm-yyyy)~~ ~~(mm-dd-yyyy)~~
 
 > `days to birthday` - show how much days left to the contact birthday 
 >>Example: `days to birthday` name
 
-> `sort directory` - just what it says 
->>Example: `sort directory` D:\\stuff\\python_projects
+#### Видалення даних
+
+> `delete` - remove contact
+>>Example: `delete` "name (only letters without spaces)"
+
+> `delete phone` - remove entered phone from contact 
+>>Example: `delete phone` "name (only letters without spaces)" "phone number (only digits without spaces)"
+
+
+### Функції пошуку
+
+>`phone` - shows all users with given phone for search
+>> Example: phone 0951234567
+
+> `show all` - show all existing contacts
+
+> `notes` - shows all recorded notes
+
+>`birthdays after days` - shows all users whose birthday is in a given number of days
+>>Example: `birthdays after days` "number of days"
+
+> `search notes` - searches all notes for a match, prints out all matching notes
+### Робота з нотатками 
 
 > `create note` - creates a new note 
 >>Example: `create note` "name (only letters without spaces)"
@@ -63,9 +82,11 @@
 > `describe note` - adds description to a note 
 >>Example: `describe note` "name" "description"
 
-> `delete description` - deletes the description of a note 
-
 > `alter description` - changes the description of a note, if it exists
+
+> `delete description` - deletes the description of a note
+
+### Робота з тегами
 
 > `tag` - add a tag to the note 
 >>Example: `tag` "name" "tag"
@@ -73,15 +94,15 @@
 > `untag` - deletes a tag from a note, if it exists 
 >>Example: `untag` "name" "tag"
 
-> `search notes` - searches all notes for a match, prints out all matching notes
-
-> `notes` - shows all recorded notes
+### Сортування
 
 > `sort directory` - just what it says 
 >>Example: `sort directory` D:\\stuff\\python_projects\n
 
->`birthdays after days` - shows all users whose birthday is in a given number of days
->>Example: `birthdays after days` "number of days"
+> `sort directory` - just what it says 
+>>Example: `sort directory` D:\\stuff\\python_projects
 
->`phone` - shows all users with given phone for search
->> Example: phone 0951234567
+### Завершення роботи
+
+>`good bye`/`close`/`exit` - bye bye
+
