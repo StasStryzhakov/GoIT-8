@@ -151,15 +151,18 @@ class AdressBook(UserDict):
     
 # перевірка на існування обєкта по ключу
     def has_record(self, name):
-        return bool(self.data.get(name))
+        if name in [i.lower() for i in self.data.keys()]:
+            return True
+        else:
+            return False
 
 # повертає обєкт класу Record по ключу
     def get_record(self, name) -> Record:
-        return self.data.get(name)
+        return self.data.get(name.capitalize())
 
 # видаляє обєкт класу Record
     def remove_record(self, name):
-        del self.data[name]
+        del self.data[name.capitalize()]
         
 # шукає контакт по введеним даним користувача в іменах та номерах телефону
     def search(self, value):

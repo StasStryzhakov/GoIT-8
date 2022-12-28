@@ -19,9 +19,11 @@ import re
 CONTACTS = AdressBook()
 NOTES = Notes()
 
+
 # вивід інструкції
 def get_help(*data):
     return HelpMessage.get_message()
+
 
 # обробляє помилки
 def input_error(func):
@@ -40,68 +42,75 @@ def input_error(func):
 
     return inner
 
+
 # привітальне повідомлення
 def greeting(*data):
     return GreetingMessage.get_message()
 
+
 # прощальне повідомлення
 def stop_bot(*data):
     return StopMessage.get_message()
+
 
 # додати контакт, спочатку формуєся сам контакт, а потім додається у книгу
 def add_contact(data):
 
     name, phones = get_data_from_user(data)
 
-    if name in CONTACTS:
+    if name in [i.lower() for i in CONTACTS]:
         raise ValueError('This contact already exist.')
 
-    record = Record(name)
+    record = Record(name.capitalize())
 
     for phone in phones:
         record.add_phone(phone)
 
     CONTACTS.add_record(record)
 
-    return AddContactMessage.get_message(name)
+    return AddContactMessage.get_message(name.capitalize())
+
 
 # змінити номер(и) контакту
 def change_contact(data):
 
     name, phones = get_data_from_user(data)
-    record = CONTACTS[name]
+    record = CONTACTS[name.capitalize()]
     record.change_phone(phones)
 
-    return ChangeContacPhonetMessage.get_message(name)
+    return ChangeContacPhonetMessage.get_message(name.capitalize())
+
 
 # пошук контакту
 def show_contact_phone(data: str):
-    return CONTACTS.search(data.strip()).get_info()
+    return CONTACTS.search(data.strip().lower()).get_info()
+
 
 # вивід інформації по всім контактам
 def show_all_contacts(*data):
-
     result = [record.get_info() for page in CONTACTS.iterator() for record in page]
     return '\n'.join(result)
 
+
 # видалити телефон
 def del_phone(data):
-
     name, phone = data.strip().split(' ')
+    name = name.capitalize()
     record = CONTACTS[name]
     return DeletePhoneMessage.get_message(record.delete_phone(phone), name, phone)
 
+
 # видалити контакт
 def del_contact(data):
-
-    name = data.strip()
+    name = data.strip().capitalize()
     CONTACTS.remove_record(name)
     return DeleteContactMessage.get_message(name)
 
+
 # додати email
 def add_email(data, flag=True):
-    
     name, email = data.strip().split(' ')
+    name = name.capitalize()
     record = CONTACTS[name]
     
     if record.email and flag:
@@ -111,24 +120,26 @@ def add_email(data, flag=True):
     
     return AddContactEmaiMessage.get_message(name, email)
 
+
 def change_email(data):
     return add_email(data, False)
     
-    
+
 # додати дату народження
 def add_birth(data):
-
     name, birthday = data.strip().split(' ')
+    name = name.capitalize()
     record = CONTACTS[name]
     record.add_birthday(birthday)
     return AddContactBirthdayMessage.get_message(name, birthday)
 
+
 # виводить кількість днів до дня народження контакту
 def days_to_birthday(data: str):
-
-    record = CONTACTS[data.strip()]
+    record = CONTACTS[data.strip().capitalize()]
     name = record.name.value
-    return  DaysToBirthdayMessage.get_message(name, record.day_to_bithday())
+    return DaysToBirthdayMessage.get_message(name, record.day_to_bithday())
+
 
 # виводить дні народження за задану кількість днів
 def birthdays_after_days(data):
@@ -233,15 +244,18 @@ COMMANDS = {'hello': greeting,
 def break_func(*data):
     return 'Wrong enter'
 
+
 # обробка данних введених користувачем
 def get_data_from_user(data: str):
     name, *phones = data.lower().strip().split(' ')
 
     return name, phones
 
+
 # вибір команди, якщо такої нема, то буде виконана стоп функція
 def get_command(command):
     return COMMANDS.get(command, break_func)
+
 
 # обробка запиту користувача
 @input_error
@@ -391,12 +405,6 @@ def main():
         CONTACTS.save_to_file()
         NOTES.save_to_file()
     
-        
-        
-                
-        
-
-
 
 if __name__ == '__main__':
     main()
