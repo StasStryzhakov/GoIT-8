@@ -147,8 +147,13 @@ def birthdays_after_days(data):
 def add_note_description(data: str):
     data = data.strip().split(' ')
     name = data.pop(0).lower()
+    data = ' '.join(data)
+    if not data:
+        return "A valid description must contain something.\n"
     if name in [i.lower() for i in NOTES.data.keys()]:
-        return NOTES.data[name.capitalize()].add_description(' '.join(data))
+        return NOTES.data[name.capitalize()].add_description(data)
+    else:
+        raise KeyError
 
 
 # Видалити описання нотатку
@@ -165,8 +170,11 @@ def del_note_description(data: str):
 def change_note_description(data: str):
     data = data.strip().split(' ')
     name = data.pop(0).lower()
+    data = ' '.join(data)
+    if not data:
+        return "A valid description must contain something.\n"
     if name in [i.lower() for i in NOTES.data.keys()]:
-        return NOTES.data[name.capitalize()].change_description(' '.join(data))
+        return NOTES.data[name.capitalize()].change_description(data)
     else:
         return NOTES.data[name.capitalize()].change_description(None)
 
