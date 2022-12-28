@@ -11,7 +11,7 @@ setup(
     developers='Руслан, Макс Корнієв, Олександр Невський, ',
     include_package_data=True,
     packages=find_namespace_packages(),
-    entry_points={'console_scripts': ['pabot = pabot.pabot:main']}
+    entry_points={'console_scripts': ['pabot = pabot.Pabot:main']}
 )
 
 

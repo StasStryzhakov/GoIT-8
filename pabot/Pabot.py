@@ -1,6 +1,6 @@
 from AdressBook import AdressBook, Record
-from sort import sort_files
-from notes import Notes
+from Sort import sort_files
+from Notes import Notes
 from Message import (AddContactMessage,
                      AddContactBirthdayMessage,
                      ChangeContacPhonetMessage,
