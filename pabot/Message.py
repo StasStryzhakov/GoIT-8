@@ -104,7 +104,7 @@ class BirthdaysAfterDaysMessage(Message):
     def get_message(result: list):
         if not result:
             print('No birthdays for this days')
-        return print(*result, sep='\n')
+        return '\n'.join(result)
 
 class ValueErrorMessage(Message):
 

@@ -134,11 +134,11 @@ def days_to_birthday(data: str):
 def birthdays_after_days(data):
     try:
         result = []
-        days = int(data)
+        days = int(data.strip())
         for name, record in CONTACTS.items():
-            if record.birthday and record.day_to_bithday() <= days:
+            if record.birthday and int(record.day_to_bithday()) <= days:
                 result.append(f'{name} - {record.birthday.value}')
-        return BirthdaysAfterDaysMessage(result)
+        return BirthdaysAfterDaysMessage.get_message(result)
     except ValueError:
         return ValueErrorMessage
         
@@ -202,7 +202,7 @@ def del_note_tag(data: str):
 # список команд боту
 COMMANDS = {'hello': greeting,
             'help': get_help,
-            'add': add_contact,
+            'add contact': add_contact,
             'change phone': change_contact,
             'phone': show_contact_phone,
             'show all': show_all_contacts,
@@ -211,7 +211,7 @@ COMMANDS = {'hello': greeting,
             'exit': stop_bot,
             'delete phone': del_phone,
             'delete contact': del_contact,
-            'birthday': add_birth,
+            'add birthday': add_birth,
             'days to birthday': days_to_birthday,
             'birthdays after days': birthdays_after_days,
             'create note': NOTES.add_note,
@@ -223,7 +223,7 @@ COMMANDS = {'hello': greeting,
             'untag': del_note_tag,
             'search notes': NOTES.finder,
             'show notes': NOTES.show_notes,
-            'email': add_email,
+            'add email': add_email,
             'change email': change_email,
             'sort by tag': NOTES.notes_sort,
             'sort directory': sort_files}
