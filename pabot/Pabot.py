@@ -20,7 +20,7 @@ CONTACTS = AdressBook()
 NOTES = Notes()
 
 # вивід інструкції
-def get_help(*data):
+def get_help():
     return HelpMessage.get_message()
 
 # обробляє помилки
@@ -41,11 +41,11 @@ def input_error(func):
     return inner
 
 # привітальне повідомлення
-def greeting(*data):
+def greeting():
     return GreetingMessage.get_message()
 
 # прощальне повідомлення
-def stop_bot(*data):
+def stop_bot():
     return StopMessage.get_message()
 
 # додати контакт, спочатку формуєся сам контакт, а потім додається у книгу
@@ -230,7 +230,7 @@ COMMANDS = {'hello': greeting,
 
 
 # стоп функція
-def break_func(*data):
+def break_func():
     return 'Wrong enter'
 
 # обробка данних введених користувачем
@@ -250,22 +250,27 @@ def get_user_request(user_input: str):
     data = ''
 
     for key in COMMANDS:
-        if user_input.strip().lower().startswith(key):
+        re_key = r'{key}\b'
+        if bool(re.search(re_key, user_input, flags=re.IGNORECASE)):
             command = key
-            data = user_input[len(key):]
+            data = user_input.strip().lower()[len(key):]
             break
     
     if not command:
-        command = gess_what(user_input)
-        data = user_input[len(command):]    
+        result = gess_what(user_input)
+        command = result[0]
+        data = result[1]   
    
-    return get_command(command)(data)
+    if data:
+        return get_command(command)(data)
+    return get_command(command)()
 
 
 def gess_what(user_input):
     """"
-    Функція намагається підібрати бажану опцію при не коректному введені команди.
-    Словник dict_result - своєрідна турнірна таблиця, де ключі - можливі команди боту, а значення словника - бали.
+    Функція намагається підібрати бажану опцію, якщо є опечатка при введені команди.
+    Словник dict_result - своєрідна турнірна таблиця, де ключі - можливі команди 
+    боту, а значення словника - бали.
     Бот запропонує користувачу команду, що набере найбільше балів в ході аналізу.
     """
     dict_result = {
@@ -278,6 +283,7 @@ def gess_what(user_input):
             'exit': 0,
             'delete contact': 0, 
             'days to birthday': 0, 
+            'birthdays after days': 0,
             'create note': 0,
             'remove note': 0,
             'describe note': 0,
@@ -288,12 +294,13 @@ def gess_what(user_input):
             'search notes': 0,
             'show notes': 0,
             'sort directory': 0,
-            'email': 0, 
+            'sort by tag': 0,
+            'add email': 0, 
             'change email': 0, 
-            'add': 0, 
+            'add contact': 0, 
             'change phone': 0, 
             'delete phone': 0, 
-            'birthday': 0, 
+            'add birthday': 0, 
             } 
 
     # для конвертації символів
@@ -335,11 +342,9 @@ def gess_what(user_input):
    
     text_words = text.split(" ") # список слів введених користувачем
 
-    # порівняння списків слів у введеному тексті користувачем та слів існуючої команди та присвоєння балів 
-    result = []
+    # порівняння слів у введеному тексті та слів існуючої команди i присвоєння балів 
     n = 0
-    # якщо результат порівняння за першим словом неоднозначний, порівнюватиметься друге слово
-    while len(result) != 1 and n < 2:
+    while n < 2:
         
         for command in dict_result.keys():
             command_words = command.split(" ") 
@@ -360,18 +365,18 @@ def gess_what(user_input):
                 if char in word:
                     word = word.replace(char, "") # для врахування букв, що повторюються
                     dict_result[command] += 2     
-
-        # визначення найбільш вірогідної команди
-        result = []
-        for key, value in dict_result.items(): 
-            if value == max(dict_result.values()):
-                result.append(key)
         n += 1
 
-    answer = input(f'Did you mean "{result[0]}" command to execute?(Y/N):')
+        # визначення найбільш вірогідної команди
+        for key, value in dict_result.items(): 
+            if value == max(dict_result.values()):
+                command_result = key       
 
+    answer = input(f'Did you mean "{command_result}" command to execute?(Y/N):')
+    
     if answer == "Y" or answer == "y":
-        return result[0]
+        data_result = " ".join(text_words[len(command_result):])
+        return (command_result, data_result)
 
 
 # головна функція
