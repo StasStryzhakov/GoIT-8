@@ -21,7 +21,7 @@ NOTES = Notes()
 
 
 # вивід інструкції
-def get_help():
+def get_help(*data):
     return HelpMessage.get_message()
 
 
@@ -44,12 +44,12 @@ def input_error(func):
 
 
 # привітальне повідомлення
-def greeting():
+def greeting(*data):
     return GreetingMessage.get_message()
 
 
 # прощальне повідомлення
-def stop_bot():
+def stop_bot(*data):
     return StopMessage.get_message()
 
 
@@ -241,7 +241,7 @@ COMMANDS = {'hello': greeting,
 
 
 # стоп функція
-def break_func():
+def break_func(*data):
     return 'Wrong enter'
 
 
@@ -264,27 +264,22 @@ def get_user_request(user_input: str):
     data = ''
 
     for key in COMMANDS:
-        re_key = r'{key}\b'
-        if bool(re.search(re_key, user_input, flags=re.IGNORECASE)):
+        if user_input.strip().lower().startswith(key):
             command = key
-            data = user_input.strip().lower()[len(key):]
+            data = user_input[len(key):]
             break
     
     if not command:
-        result = gess_what(user_input)
-        command = result[0]
-        data = result[1]   
+        command = gess_what(user_input)
+        data = user_input[len(command):]    
    
-    if data:
-        return get_command(command)(data)
-    return get_command(command)()
+    return get_command(command)(data)
 
 
 def gess_what(user_input):
     """"
-    Функція намагається підібрати бажану опцію, якщо є опечатка при введені команди.
-    Словник dict_result - своєрідна турнірна таблиця, де ключі - можливі команди 
-    боту, а значення словника - бали.
+    Функція намагається підібрати бажану опцію при не коректному введені команди.
+    Словник dict_result - своєрідна турнірна таблиця, де ключі - можливі команди боту, а значення словника - бали.
     Бот запропонує користувачу команду, що набере найбільше балів в ході аналізу.
     """
     dict_result = {
@@ -297,7 +292,6 @@ def gess_what(user_input):
             'exit': 0,
             'delete contact': 0, 
             'days to birthday': 0, 
-            'birthdays after days': 0,
             'create note': 0,
             'remove note': 0,
             'describe note': 0,
@@ -308,13 +302,12 @@ def gess_what(user_input):
             'search notes': 0,
             'show notes': 0,
             'sort directory': 0,
-            'sort by tag': 0,
-            'add email': 0, 
+            'email': 0, 
             'change email': 0, 
-            'add contact': 0, 
+            'add': 0, 
             'change phone': 0, 
             'delete phone': 0, 
-            'add birthday': 0, 
+            'birthday': 0, 
             } 
 
     # для конвертації символів
@@ -356,9 +349,11 @@ def gess_what(user_input):
    
     text_words = text.split(" ") # список слів введених користувачем
 
-    # порівняння слів у введеному тексті та слів існуючої команди i присвоєння балів 
+    # порівняння списків слів у введеному тексті користувачем та слів існуючої команди та присвоєння балів 
+    result = []
     n = 0
-    while n < 2:
+    # якщо результат порівняння за першим словом неоднозначний, порівнюватиметься друге слово
+    while len(result) != 1 and n < 2:
         
         for command in dict_result.keys():
             command_words = command.split(" ") 
@@ -379,18 +374,18 @@ def gess_what(user_input):
                 if char in word:
                     word = word.replace(char, "") # для врахування букв, що повторюються
                     dict_result[command] += 2     
-        n += 1
 
         # визначення найбільш вірогідної команди
+        result = []
         for key, value in dict_result.items(): 
             if value == max(dict_result.values()):
-                command_result = key       
+                result.append(key)
+        n += 1
 
-    answer = input(f'Did you mean "{command_result}" command to execute?(Y/N):')
-    
+    answer = input(f'Did you mean "{result[0]}" command to execute?(Y/N):')
+
     if answer == "Y" or answer == "y":
-        data_result = " ".join(text_words[len(command_result):])
-        return (command_result, data_result)
+        return result[0]
 
 
 # головна функція
