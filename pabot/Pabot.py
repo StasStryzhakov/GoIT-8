@@ -264,8 +264,7 @@ def get_user_request(user_input: str):
     data = ''
 
     for key in COMMANDS:
-        re_key = r'{key}\b'
-        if bool(re.search(re_key, user_input, flags=re.IGNORECASE)):
+        if bool(re.search(key, user_input, flags=re.IGNORECASE)):
             command = key
             data = user_input.strip().lower()[len(key):]
             break
