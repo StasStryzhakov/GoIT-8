@@ -24,7 +24,7 @@ class Notes(UserDict):
         del self.data[name]
         return "Note has been deleted.\n"
 
-    def show_notes(self):  # Повертає репрезентацію всього словника для виведення на екран
+    def show_notes(self, *args):  # Повертає репрезентацію всього словника для виведення на екран
         tmp = [val for val in self.data.values()]
         return "".join(list(map(lambda x: str(x), tmp)))
 
@@ -126,23 +126,19 @@ class Note:
         self.tags = [Tag(tag)] if tag else []
 
     def add_description(self, description):  # Додати опис
-        if not description:
-            return "A valid description must contain something.\n"
         if not self.description.value:
             self.description = Description(description)
             return "Description added.\n"
         else:
             return "This note already has a description.\n"
 
-    def del_description(self):  # Видалити опис
+    def del_description(self, *args):  # Видалити опис
         if self.description.value:
             self.description = Description('')
             return "Deleted the description.\n"
         return "No description recorded.\n"
 
     def change_description(self, new_description):  # Змінити опис
-        if not new_description:
-            return "A valid description must contain something.\n"
         if self.description.value:
             self.description = Description(new_description)
             return "Description changed.\n"
