@@ -19,29 +19,27 @@ class HelpMessage(Message):
 >>> hello
 >>> help - show commands list
 >>> add contact - add new contact in storage Example: add contact "name (only letters without spaces)" "phone number (only digits without spaces)"
->>> change - change existing contact Example: change "exist contact name (only letters without spaces)" "new phone number (only digits without spaces)"
+>>> add email - add email to the contact Example: add email "name" "email"
+>>> add birthday - add birthday date to the contact Example: birthday name date(yyyy-mm-dd)
+>>> change phone - change existing contact Example: change "exist contact name (only letters without spaces)" "new phone number (only digits without spaces)"
+>>> change email - change contact`s email Example: change email "name" "new_email"
 >>> phone - shows all users with given phone for search. Example: phone +380951234567
+>>> days to birthday - show how much days left to the contact birthday Example: days to birthday name
 >>> show all - show all existing contacts
 >>> delete phone - remove entered phone from contact Example: delete phone "name (only letters without spaces)" "phone number (only digits without spaces)"
->>> delete - remove contact Example: delete "name (only letters without spaces)" 
->>> good bye/close/exit - bye bye
->>> birthday - add birthday date to the contact Example: birthday name date(yyyy-mm-dd)
->>> days to birthday - show how much days left to the contact birthday Example: days to birthday name
->>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects
+>>> delete contact - remove contact Example: delete "name (only letters without spaces)" 
 >>> create note - creates a new note Example: create note "name (only letters without spaces)"
 >>> remove note - deletes a note by name Example: remove note "name"
 >>> describe note - adds description to a note Example: describe note "name" "description"
->>> delete description - deletes the description of a note 
+>>> remove description - deletes the description of a note 
 >>> alter description - changes the description of a note, if it exists
 >>> tag - add a tag to the note Example: tag "name" "tag"
 >>> untag - deletes a tag from a note, if it exists Example: untag "name" "tag"
 >>> search notes - searches all notes for a match, prints out all matching notes
->>> notes - shows all recorded notes
+>>> show notes - shows all recorded notes
 >>> sort by tag - performs an alphabetical sorting of notes, based on matches in their tags
 >>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects\n
->>> add email - add email to the contact Example: add email "name" "email"
->>> change email - change contact`s email Example: change email "name" "new_email"
->>> sort by tag - performs an alphabetical sorting of notes, based on matches in their tags
+>>> good bye/close/exit - bye bye
 '''
 
 class GreetingMessage(Message):
