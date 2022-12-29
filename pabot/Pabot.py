@@ -272,7 +272,7 @@ def get_user_request(user_input: str):
     if not command:
         result = gess_what(user_input)
         command = result[0]
-        data = result[1]   
+        data = result[1] 
    
     if data:
         return get_command(command)(data)
@@ -388,8 +388,9 @@ def gess_what(user_input):
     answer = input(f'Did you mean "{command_result}" command to execute?(Y/N):')
     
     if answer == "Y" or answer == "y":
-        data_result = " ".join(text_words[len(command_result):])
-        return (command_result, data_result)
+        data_result = " ".join(text_words[len(command_result.split(" ")):])
+        result = (command_result, data_result)
+        return result
 
 
 # головна функція
