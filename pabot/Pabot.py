@@ -215,7 +215,7 @@ COMMANDS = {'hello': greeting,
             'help': get_help,
             'add contact': add_contact,
             'change phone': change_contact,
-            'phone': show_contact_phone,
+            'search phone': show_contact_phone,
             'show all': show_all_contacts,
             'good bye': stop_bot,
             'close': stop_bot,
@@ -264,7 +264,11 @@ def get_user_request(user_input: str):
     data = ''
 
     for key in COMMANDS:
-        if bool(re.search(key, user_input, flags=re.IGNORECASE)):
+        # if bool(re.search(fr'{key}\b', user_input, flags=re.IGNORECASE)):
+        #     command = key
+        #     data = user_input.strip().lower()[len(key):]
+        #     break
+        if user_input.strip().lower().startswith(key):
             command = key
             data = user_input.strip().lower()[len(key):]
             break
@@ -289,7 +293,7 @@ def gess_what(user_input):
     dict_result = {
             'hello': 0,
             'help': 0,
-            'phone': 0, 
+            'search phone': 0, 
             'show all': 0,
             'good bye': 0,
             'close': 0,

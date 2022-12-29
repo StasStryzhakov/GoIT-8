@@ -38,8 +38,8 @@ class HelpMessage(Message):
 >>> search notes - searches all notes for a match, prints out all matching notes
 >>> show notes - shows all recorded notes
 >>> sort by tag - performs an alphabetical sorting of notes, based on matches in their tags
->>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects\n
->>> good bye/close/exit - bye bye
+>>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects
+>>> good bye/close/exit - bye bye\n
 '''
 
 class GreetingMessage(Message):

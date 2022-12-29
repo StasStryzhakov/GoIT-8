@@ -121,7 +121,7 @@ class Record:
 # видалити телефон  
     def delete_phone(self, phone: str):
         for record_phone in self.phones:
-            if record_phone.value == phone:
+            if record_phone.value == phone or phone in record_phone.value:
                 self.phones.remove(record_phone)
                 return True
         return False
@@ -171,7 +171,7 @@ class AdressBook(UserDict):
 
         for record in self.get_all_record().values():
             for phone in record.phones:
-                if phone.value == value:
+                if phone.value == value or value in phone.value:
                     return record
 
         raise ValueError("Contact with this value does not exist.")
