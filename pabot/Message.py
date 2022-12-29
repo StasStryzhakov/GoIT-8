@@ -18,7 +18,7 @@ class HelpMessage(Message):
         return '''Command to execute: 
 >>> hello
 >>> help - show commands list
->>> add - add new contact in storage Example: add "name (only letters without spaces)" "phone number (only digits without spaces)"
+>>> add contact - add new contact in storage Example: add contact "name (only letters without spaces)" "phone number (only digits without spaces)"
 >>> change - change existing contact Example: change "exist contact name (only letters without spaces)" "new phone number (only digits without spaces)"
 >>> phone - shows all users with given phone for search. Example: phone +380951234567
 >>> show all - show all existing contacts
@@ -38,8 +38,11 @@ class HelpMessage(Message):
 >>> search notes - searches all notes for a match, prints out all matching notes
 >>> notes - shows all recorded notes
 >>> sort by tag - performs an alphabetical sorting of notes, based on matches in their tags
->>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects\n'''
-
+>>> sort directory - just what it says Example: sort directory D:\\stuff\\python_projects\n
+>>> add email - add email to the contact Example: add email "name" "email"
+>>> change email - change contact`s email Example: change email "name" "new_email"
+>>> sort by tag - performs an alphabetical sorting of notes, based on matches in their tags
+'''
 
 class GreetingMessage(Message):
         

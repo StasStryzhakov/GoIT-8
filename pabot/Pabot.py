@@ -1,7 +1,7 @@
-from AdressBook import AdressBook, Record
-from Sort import sort_files
-from Notes import Notes
-from Message import (AddContactMessage,
+from pabot.AdressBook import AdressBook, Record
+from pabot.Sort import sort_files
+from pabot.Notes import Notes
+from pabot.Message import (AddContactMessage,
                      AddContactBirthdayMessage,
                      ChangeContacPhonetMessage,
                      DaysToBirthdayMessage,

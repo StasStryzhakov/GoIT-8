@@ -3,7 +3,7 @@
 
 # Установка 
 
-Вионайте послідовно в терміналі:
+Виконайте послідовно в терміналі:
 
 
 1. cd pabot
@@ -12,9 +12,8 @@
 #### АБО
 
 1. git clone https://github.com/StasStryzhakov/GoIT-8.git
-2. cd Goit-8
-3. cd pabot
-4. python setup.py install
+2. cd GoIT-8
+3. python setup.py install
 
 
 # Використання
@@ -35,8 +34,8 @@
 
 #### Ім`я та телефон
 
-> `add` - add new contact in storage 
->>Example: `add` "name (only letters without spaces)" "phone number (only digits without spaces)"
+> `add contact` - add new contact in storage 
+>>Example: `add contact` "name (only letters without spaces)" "phone number (only digits without spaces)"
 
 > `change` - change existing contact 
 >>Example: `change` "exist contact name (only letters without spaces)" "new phone number (only digits without spaces)"
@@ -49,6 +48,14 @@
 > `days to birthday` - show how much days left to the contact birthday 
 >>Example: `days to birthday` name
 
+#### Email
+
+> `add email` - add email to the contact
+>> Example: `add email` "name" "email"
+
+> `change email` - change contact`s email
+>> Example: `change email` "name" "new_email"
+
 #### Видалення даних
 
 > `delete` - remove contact
@@ -56,7 +63,6 @@
 
 > `delete phone` - remove entered phone from contact 
 >>Example: `delete phone` "name (only letters without spaces)" "phone number (only digits without spaces)"
-
 
 ### Функції пошуку
 
@@ -94,13 +100,12 @@
 > `untag` - deletes a tag from a note, if it exists 
 >>Example: `untag` "name" "tag"
 
-### Сортування
+> `sort by tag` - performs an alphabetical sorting of notes, based on matches in their tags
+>> Example: `sort by tag` "phrase"
+### Сортування директорій
 
 > `sort directory` - just what it says 
 >>Example: `sort directory` D:\\stuff\\python_projects\n
-
-> `sort directory` - just what it says 
->>Example: `sort directory` D:\\stuff\\python_projects
 
 ### Завершення роботи
 
